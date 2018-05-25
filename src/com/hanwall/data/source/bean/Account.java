@@ -5,6 +5,7 @@ public class Account {
 		EBANK, 
 		GOVEMENT,
 		EMAIL,
+		QQ,
 		COMMON;
 		public static IDType setIDType(int index) {
 			for(IDType i : IDType.values()) {
@@ -13,7 +14,9 @@ public class Account {
 				}
 			}
 			return null;
+			
 		}
+		
 	};
 	
 	public int id;

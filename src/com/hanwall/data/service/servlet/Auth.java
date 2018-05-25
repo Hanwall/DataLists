@@ -2,6 +2,7 @@ package com.hanwall.data.service.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hanwall.data.source.bean.Account;
 import com.hanwall.data.source.jdbc.QueryData;
 import com.hanwall.data.utils.Config;
 import com.hanwall.data.utils.MD5_Test;
@@ -35,9 +37,12 @@ public class Auth extends HttpServlet {
 	PrintWriter  wirte = response.getWriter();
 	String passwd = request.getParameter("passwd");
 	String value = Config.authtoken;
-	System.out.println(MD5_Test.MD5(passwd));
 	if(value.equals(MD5_Test.MD5(passwd))) {
-		QueryData.query();
+		List<Account> list = QueryData.query();
+		
+		request.setAttribute("account", list);
+		request.setAttribute("haha", "do value success");
+		request.getRequestDispatcher("./list.jsp").forward(request,response); 
 	}else {
 		wirte.println("login failed");
 	}

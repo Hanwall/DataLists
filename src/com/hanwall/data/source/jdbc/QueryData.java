@@ -4,47 +4,57 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import com.hanwall.data.source.bean.Account;
 import com.hanwall.data.source.bean.Account.IDType;
 
 public class QueryData {
-	public static QueryData query() {
+	
+	public static List<Account> query() {
 		Connection conn = ConnectDatabase.getConn();
 	    String sql = "select * from account";
-	    PreparedStatement pstmt;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    List<Account> list = new ArrayList<Account>();  
 	    try {
-	        pstmt = (PreparedStatement)conn.prepareStatement(sql);
-	        ResultSet rs = pstmt.executeQuery();
-	        int col = rs.getMetaData().getColumnCount();
+	        pstmt = conn.prepareStatement(sql);
+	        rs = pstmt.executeQuery();
+	       
 	        while (rs.next()) {
-	        	for (int i = 1; i+10 <= col; i++) {
-	            	Account ac = new Account();
-	            	ac.setId(rs.getInt(i));
-	            	ac.setSysid(rs.getString(i+1));
-	            	ac.setUsername(rs.getString(i+2));
-	            	ac.setEmail(rs.getString(i+3));
-	            	ac.setPasswd(rs.getString(i+4));
-	            	ac.setPhoneNum(rs.getString(i+5));
-	            	ac.setIdentify(rs.getString(i+6));
-	            	ac.setLink(rs.getString(i+7));
-	            	ac.setIdtype(IDType.setIDType(rs.getInt(i+8)));
-	            	ac.setStatus(rs.getString(i+9));
-	            	ac.setEvidence(rs.getString(i+10));
-	               }
+	        		Account ac = new Account();
+	            	ac.setId(rs.getInt("id"));
+	            	ac.setSysid(rs.getString("sysid"));
+	            	ac.setUsername(rs.getString("username"));
+	            	ac.setEmail(rs.getString("email"));
+	            	ac.setPasswd(rs.getString("passwd"));
+	            	ac.setPhoneNum(rs.getString("phoneNum"));
+	            	ac.setIdentify(rs.getString("identify"));
+	            	ac.setLink(rs.getString("link"));
+	            	ac.setKeywordid(rs.getString("keywordid"));
+	            	ac.setIdtype(IDType.setIDType(rs.getInt("idtype")));
+	            	ac.setStatus(rs.getString("status"));
+	            	ac.setEvidence(rs.getString("evidence"));
+	                list.add(ac);
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
 	    
-	    try {
-	    	
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	    
-	    return null;
+	    	try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	
+		
+	    
+	    return list;
 	}
 }
