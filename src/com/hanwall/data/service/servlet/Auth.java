@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hanwall.data.source.jdbc.QueryData;
+import com.hanwall.data.utils.Config;
+import com.hanwall.data.utils.MD5_Test;
 
 /**
  * Servlet implementation class Auth
@@ -30,19 +32,15 @@ public class Auth extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	PrintWriter  wirte = response.getWriter();
-	String username=	request.getParameter("username");
 	String passwd = request.getParameter("passwd");
-	if("hanwall".equals(username)&&"haihua".equals(passwd)) {
-		//wirte.println("login success");
-		//database oprate
+	String value = Config.authtoken;
+	System.out.println(MD5_Test.MD5(passwd));
+	if(value.equals(MD5_Test.MD5(passwd))) {
 		QueryData.query();
 	}else {
 		wirte.println("login failed");
-		System.out.println("value of username & passwd is "+username+"@"+passwd);
 	}
-	
 	}
 
 	/**

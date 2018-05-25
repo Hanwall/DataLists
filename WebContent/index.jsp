@@ -5,12 +5,26 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LOGIN PAGE</title>
+<style type="text/css">
+body {background-image:url(Resources/Login.jpg);}
+div{position: absolute;/*绝对定位*/
+width: 300px;
+height: 200px;
+text-align: center;/*(让div中的内容居中)*/
+top: 50%;
+left: 50%;
+margin-top: -200px;
+margin-left: -150px;}
+form {background-color:#ffffff;}
+</style>
 </head>
 <body>
+<div>
 <form action="auth" method="post">
-  <p>用户名: <input type="text" name="username" /></p>
-  <p>密码: <input type="password" name="passwd" /></p>
+  <p>LOGIN:</p><input type="password" name="passwd" style="text-align:center;"/><br/>
+  <br/>
   <input type="submit" value="Submit" />
 </form>
+</div>
 </body>
 </html>
