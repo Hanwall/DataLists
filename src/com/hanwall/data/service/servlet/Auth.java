@@ -39,9 +39,7 @@ public class Auth extends HttpServlet {
 	String value = Config.authtoken;
 	if(value.equals(MD5_Test.MD5(passwd))) {
 		List<Account> list = QueryData.query();
-		
 		request.setAttribute("account", list);
-		request.setAttribute("haha", "do value success");
 		request.getRequestDispatcher("./list.jsp").forward(request,response); 
 	}else {
 		wirte.println("login failed");
